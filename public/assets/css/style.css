@@ -1,0 +1,2297 @@
+/* Reset et variables de base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Couleurs et ombres utilisées partout */
+:root {
+  --primary-color: #6c63ff;
+  --primary-hover: #574bd9;
+  --secondary-color: #7c8db5;
+  --success-color: #10b981;
+  --error-color: #ef4444;
+  --warning-color: #f59e0b;
+  --background-color: #f3f6ff;
+  --white: #ffffff;
+  --text-color: #0b1b3a;
+  --muted: #6b7280;
+  --border-color: #e6ebf2;
+  --card: #ffffff;
+  --card-soft: #f7faff;
+  --ring: #dfe6f3;
+  --primary: #6d28d9;
+  --primary-2: #8b5cf6;
+  --shadow: 0 2px 6px rgba(24, 39, 75, 0.1);
+  --shadow-sm: 0 6px 18px rgba(28, 37, 54, 0.06);
+  --shadow-lg: 0 20px 40px -12px rgba(24, 39, 75, 0.2);
+  --line: rgba(24, 39, 75, 0.08);
+}
+
+/* Style de base de la page */
+body {
+  min-height: 100%;
+  background: var(--background-color);
+  color: var(--text-color);
+  font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Largeur max du contenu */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Zone principale de la page */
+.main-content {
+  flex: 1;
+  padding: 2rem 0;
+  display: block;
+}
+
+/* Entête qui reste en haut */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+/* Barre de navigation */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+/* Lien du logo/nom du site */
+.nav-brand a {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+/* Liste du menu */
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+}
+
+/* Liens du menu */
+.nav-menu a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+/* Couleur au survol du menu */
+.nav-menu a:hover {
+  color: var(--primary-color);
+}
+
+/* Groupe de petits liens type pastilles */
+.nav-pills {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  list-style: none;
+}
+
+/* Style d’une pastille */
+.nav-pills a {
+  display: inline-block;
+  padding: 0.48rem 0.9rem;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  color: var(--text-color);
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s,
+    transform 0.2s, box-shadow 0.2s;
+}
+
+/* Pastille au survol */
+.nav-pills a:hover,
+.nav-pills a:focus-visible {
+  background: var(--primary-color);
+  color: #fff;
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -8px rgba(24, 39, 75, 0.35);
+  outline: none;
+}
+
+/* Pastille active */
+.nav-pills li.active a {
+  background: var(--primary-color);
+  color: #fff;
+  border-color: var(--primary-color);
+}
+
+/* Case à cocher cachée pour le burger */
+.nav-toggle {
+  position: absolute;
+  left: -9999px;
+}
+
+/* Bouton burger (boîte cliquable) */
+.nav-burger {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  background: #fff;
+}
+
+/* Barres du burger */
+.nav-burger span,
+.nav-burger span::before,
+.nav-burger span::after {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--text-color);
+  transition: transform 0.2s, opacity 0.2s, background 0.2s;
+}
+
+/* Barre du haut du burger */
+.nav-burger span::before {
+  transform: translateY(-7px);
+}
+
+/* Barre du bas du burger */
+.nav-burger span::after {
+  transform: translateY(5px);
+}
+
+/* Burger transformé en X */
+.nav-toggle:checked + .nav-burger span {
+  transform: rotate(45deg);
+}
+
+/* Ligne du haut pivotée */
+.nav-toggle:checked + .nav-burger span::before {
+  transform: rotate(-90deg);
+}
+
+/* Ligne du bas masquée */
+.nav-toggle:checked + .nav-burger span::after {
+  opacity: 0;
+}
+
+/* Burger visible en mobile */
+@media (max-width: 992px) {
+  .nav-burger {
+    display: flex;
+  }
+  /* Panneau du menu mobile */
+  .nav-menu {
+    position: fixed;
+    top: 64px;
+    right: 16px;
+    left: 16px;
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-10px);
+    opacity: 0;
+    pointer-events: none;
+    max-height: calc(100vh - 96px);
+    overflow: auto;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  /* Ouverture du menu mobile */
+  .nav-toggle:checked ~ .nav-menu {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+}
+
+/* Bandeau d’accueil dégradé */
+.hero {
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-hover)
+  );
+  color: #fff;
+  padding: 4rem 0;
+  text-align: center;
+}
+
+/* Titre principal du bandeau */
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+/* Sous-titre du bandeau */
+.hero-subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+/* Zone des boutons du bandeau */
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Message de bienvenue en badge */
+.welcome-message {
+  font-size: 1.25rem;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  display: inline-block;
+}
+
+/* Version landing avec décor */
+.hero-landing {
+  position: relative;
+  background: linear-gradient(180deg, #fff 0%, #fff 55%, transparent 55%),
+    linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 70%);
+  color: #fff;
+  padding: 0;
+}
+
+/* Conteneur de la landing */
+.hero-landing .container {
+  position: relative;
+  padding: 2.5rem 20px;
+}
+
+/* Grille texte + visuel */
+.landing-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: 2rem;
+  min-height: 420px;
+  padding-top: 40px;
+}
+
+/* Bloc gauche (texte) */
+.landing-left {
+  color: var(--text-color);
+  background: #fff;
+  border-radius: 1rem;
+  padding: 2.5rem 2rem;
+  box-shadow: var(--shadow);
+}
+
+/* Gros titre landing */
+.landing-title {
+  font-size: 2.6rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+}
+
+/* Partie accentuée du titre */
+.landing-title .accent {
+  color: #1e3a8a;
+}
+
+/* Paragraphe d’intro landing */
+.landing-text {
+  color: #475569;
+  max-width: 560px;
+  margin-bottom: 1.5rem;
+}
+
+/* Bouton lien discret */
+.btn-link-about {
+  background: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+/* Bouton lien au survol */
+.btn-link-about:hover {
+  background: #f5f7ff;
+  transform: translateY(-1px);
+}
+
+/* Bloc droit (illustrations) */
+.landing-right {
+  position: relative;
+  min-height: 380px;
+}
+
+/* Gros fond arrondi derrière */
+.shape-blob {
+  position: absolute;
+  inset: -40px -40px -40px -20px;
+  background: radial-gradient(
+      80% 80% at 70% 30%,
+      rgba(255, 255, 255, 0.22),
+      transparent 60%
+    ),
+    linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 70%);
+  border-radius: 48px;
+  filter: drop-shadow(0 12px 40px rgba(24, 39, 75, 0.25));
+}
+
+/* Cartouche “bureau” décoratif */
+.desk {
+  position: absolute;
+  left: 6%;
+  right: 36%;
+  bottom: 40px;
+  height: 140px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(1px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Livre ouvert décoratif */
+.open-book {
+  position: absolute;
+  left: 18%;
+  top: -70px;
+  width: 240px;
+  height: 120px;
+  background: #e7ecff;
+  border-radius: 14px;
+  box-shadow: 0 16px 28px rgba(0, 0, 0, 0.15);
+}
+
+/* Pages du livre */
+.open-book .page {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  width: calc(50% - 6px);
+  background: #fff;
+  border-radius: 10px;
+}
+
+/* Page gauche du livre */
+.open-book .page.left {
+  left: 8px;
+}
+
+/* Page droite du livre */
+.open-book .page.right {
+  right: 8px;
+}
+
+/* Lunettes décoratives */
+.glasses {
+  position: absolute;
+  bottom: 12px;
+  left: 26%;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Verres des lunettes */
+.glasses span {
+  width: 56px;
+  height: 26px;
+  border-radius: 30px;
+  background: rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Téléphone décoratif */
+.phone {
+  position: absolute;
+  right: 2%;
+  bottom: 10px;
+  width: 180px;
+  height: 320px;
+  background: #fff;
+  border-radius: 26px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 20px 40px rgba(24, 39, 75, 0.25);
+  padding: 16px 12px;
+}
+
+/* Encoche du téléphone */
+.phone-notch {
+  width: 60%;
+  height: 10px;
+  margin: 0 auto 14px;
+  background: #e5e7eb;
+  border-radius: 999px;
+}
+
+/* Nuage décoratif */
+.cloud {
+  position: absolute;
+  width: 80px;
+  height: 28px;
+  background: #fff;
+  border-radius: 999px;
+  filter: drop-shadow(0 2px 6px rgba(24, 39, 75, 0.15));
+  opacity: 0.9;
+}
+
+/* Morceau de nuage */
+.cloud:before,
+.cloud:after {
+  content: "";
+  position: absolute;
+  background: #fff;
+  border-radius: 999px;
+}
+
+/* Boule du nuage (gauche) */
+.cloud:before {
+  width: 32px;
+  height: 32px;
+  left: 10px;
+  top: -16px;
+}
+
+/* Boule du nuage (droite) */
+.cloud:after {
+  width: 40px;
+  height: 40px;
+  left: 30px;
+  top: -20px;
+}
+
+/* Nuage position 1 */
+.cloud.c1 {
+  right: 30%;
+  top: 60px;
+}
+
+/* Nuage position 2 */
+.cloud.c2 {
+  right: 18%;
+  top: 110px;
+}
+
+/* Masquer les nuages en mobile */
+@media (max-width: 992px) {
+  .cloud,
+  .cloud.c1,
+  .cloud.c2 {
+    display: none !important;
+  }
+}
+
+/* Section tuiles sur fond blanc */
+.landing-tiles {
+  background: #fff;
+  padding: 3rem 0 2.5rem;
+}
+
+/* Grille des tuiles */
+.landing-tiles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 1.5rem;
+  list-style: none;
+}
+
+/* Carte d’une tuile */
+.tile-card {
+  background: #6c63ff;
+  color: #fff;
+  border-radius: 14px;
+  padding: 1.4rem 1.2rem 1.2rem;
+  box-shadow: var(--shadow-lg);
+}
+
+/* Zone icône d’une tuile */
+.tile-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+/* Titre d’une tuile */
+.tile-card h3 {
+  margin: 0.35rem 0 0.25rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* Texte d’une tuile */
+.tile-card p {
+  opacity: 0.95;
+  line-height: 1.55;
+  font-size: 0.95rem;
+}
+
+/* Section lecteur (texte + image) */
+.reader-section {
+  background: #fff;
+  padding: 3.5rem 0 4rem;
+}
+
+/* Grille de la section lecteur */
+.reader-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Titre de la section lecteur */
+.reader-title {
+  color: var(--text-color);
+  font-size: 2rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.6rem;
+}
+
+/* Paragraphe de la section lecteur */
+.reader-text {
+  color: #475569;
+  margin-bottom: 1.2rem;
+  max-width: 58ch;
+}
+
+/* Cadre de l’illustration */
+.reader-illustration {
+  display: grid;
+  place-items: center;
+  min-height: 280px;
+}
+
+/* Image de l’illustration */
+.reader-illustration--img img {
+  width: clamp(260px, 48vw, 420px);
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 18px 28px rgba(24, 39, 75, 0.18));
+}
+
+/* Réglages responsive landing et lecteur */
+@media (max-width: 992px) {
+  .landing-tiles-grid {
+    grid-template-columns: 1fr;
+  }
+  .reader-grid {
+    grid-template-columns: 1fr;
+  }
+  .reader-illustration {
+    order: 1;
+  }
+  .reader-copy {
+    order: 2;
+  }
+  .shape-blob {
+    inset: -20px;
+    border-radius: 32px;
+  }
+  .landing-right {
+    min-height: 360px;
+  }
+  .phone {
+    right: 6%;
+    bottom: 14px;
+    transform: scale(0.95);
+  }
+}
+
+/* Petites tailles pour landing */
+@media (max-width: 640px) {
+  .landing-title {
+    font-size: 2rem;
+  }
+  .desk {
+    left: 6%;
+    right: 28%;
+  }
+  .open-book {
+    left: 14%;
+    width: 210px;
+  }
+  .phone {
+    right: 4%;
+    width: 160px;
+    height: 285px;
+  }
+}
+
+/* Grille des étapes */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+/* Carte d’une étape */
+.step {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+/* Rond avec le numéro d’étape */
+.step-number {
+  width: 60px;
+  height: 60px;
+  background: var(--primary-color);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 auto 1rem;
+}
+
+/* En-tête de page simple */
+.page-header {
+  background: #fff;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Titre d’en-tête de page */
+.page-header h1 {
+  font-size: 2.2rem;
+  color: var(--text-color);
+}
+
+/* Marges générales du contenu */
+.content {
+  padding: 2rem 0;
+}
+
+/* Grille contenu + sidebar */
+.content-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 3rem;
+}
+
+/* Bloc principal de contenu */
+.content-main {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+
+}
+
+/* Colonne de droite */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Encadré d’info dans la sidebar */
+.info-box {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+}
+
+/* Titre d’encadré d’info */
+.info-box h4 {
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+/* Bloc formulaire générique */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+/* Label d’un champ */
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+/* Champs de formulaire */
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: #fff;
+}
+
+/* Focus des champs */
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Cadre page login/inscription */
+.auth-container {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Carte d’authentification */
+.auth-card {
+  background: #fff;
+  padding: 3rem;
+  border-radius: 1rem;
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid var(--border-color);
+}
+
+/* En-tête de la carte d’authentification */
+.auth-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Titre d’authentification */
+.auth-header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+/* Pied de la carte d’authentification */
+.auth-footer {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-color);
+}
+
+/* Liens du pied d’authentification */
+.auth-footer a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Lien au survol dans le pied */
+.auth-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Boîte d’alerte (flash) */
+.alert {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  box-shadow: var(--shadow);
+  border-left: 4px solid transparent;
+}
+
+/* Alerte réussite */
+.alert-success {
+  background: #ecfdf5;
+  border-color: #bbf7d0;
+  color: #047857;
+  border-left-color: var(--success-color);
+}
+
+/* Alerte erreur */
+.alert-error {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #b91c1c;
+  border-left-color: var(--error-color);
+}
+
+/* Alerte attention */
+.alert-warning {
+  background: #fef3c7;
+  border-color: #fde68a;
+  color: #92400e;
+  border-left-color: var(--warning-color);
+}
+
+/* Conteneur plein écran des erreurs */
+.error-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--background-color);
+}
+
+/* Bloc contenu de la page erreur */
+.error-content {
+  text-align: center;
+  max-width: 500px;
+}
+
+/* Icône d’erreur */
+.error-icon {
+  font-size: 4rem;
+  color: var(--error-color);
+  margin-bottom: 1rem;
+}
+
+/* Gros code de l’erreur */
+.error-content h1 {
+  font-size: 4rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  margin-bottom: 0.25rem;
+}
+
+/* Sous-titre de l’erreur */
+.error-content h2 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+}
+
+/* Texte d’explication de l’erreur */
+.error-content p {
+  font-size: 1.05rem;
+  margin-bottom: 1.5rem;
+  color: #7c8db5;
+}
+
+/* Zone des boutons sous l’erreur */
+.error-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Pied de page sombre */
+.footer {
+  background: var(--text-color);
+  color: #fff;
+  text-align: center;
+  padding: 2rem 0;
+  margin-top: auto;
+}
+
+/* Style de base de tous les boutons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: 0;
+  border-radius: 9999px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 1rem;
+}
+
+/* Bouton principal violet */
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(109, 40, 217, 0.18);
+}
+
+/* Effet au survol du bouton principal */
+.btn-primary:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+/* Bouton secondaire blanc */
+.btn-secondary {
+  background: #fff;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+/* Survol bouton secondaire */
+.btn-secondary:hover {
+  background: #f4f7fc;
+}
+
+/* Variante bouton utilitaire forcée */
+.button {
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-hover)
+  ) !important;
+  color: #fff !important;
+  border: 0 !important;
+  border-radius: 9999px !important;
+  padding: 10px 18px !important;
+  font-weight: 700 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  box-shadow: 0 10px 24px rgba(109, 99, 255, 0.18) !important;
+  transition: transform 0.15s, filter 0.15s, box-shadow 0.15s !important;
+}
+
+/* Survol variante bouton utilitaire */
+.button:hover {
+  filter: brightness(1.05) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 14px 30px rgba(109, 99, 255, 0.22) !important;
+}
+
+/* Variantes colorées du bouton utilitaire */
+.button#red,
+.button#purple {
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-hover)
+  ) !important;
+}
+
+/* Très petit bouton */
+.btn-xxs {
+  padding: 0.3rem 0.55rem;
+  font-size: 0.85rem;
+  border-radius: 0.375rem;
+}
+
+/* Bouton court “fil” */
+.btn-fil {
+  width: 5rem;
+}
+
+/* Bouton plus large “ren” */
+.btn-ren {
+  width: 7rem;
+}
+
+/* Liste des médias en tuiles */
+.media-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-left: 25px;
+}
+
+/* Carte d’un média */
+.media-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 15px;
+  width: 180px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+}
+
+/* Carte média au survol */
+.media-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+/* Image de couverture du média */
+.media-cover {
+  width: 150px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background: #f1f5f9;
+  border: 1px solid var(--border-color);
+}
+
+/* Titre du média sur 2 lignes */
+.media-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111;
+  line-height: 1.3;
+  min-height: 2.6em;
+  max-height: 2.6em;
+  overflow: hidden;
+}
+
+/* Zone infos et actions du média */
+.media-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  flex: 1;
+}
+
+/* Boutons calés en bas de la carte média */
+.media-info .btn {
+  margin-top: auto;
+}
+
+/* Zone actions admin d’un média */
+.media-admin-actions {
+  margin-top: 6px;
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+/* Ligne d’info stock/dispo */
+.media-stock-line {
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+/* Garde la hauteur des actions admin */
+.media-admin-actions {
+  min-height: 34px;
+}
+
+/* Garde la hauteur de la ligne stock */
+.media-stock-line {
+  min-height: 18px;
+}
+
+/* Enveloppe scrollable de la table admin */
+.admin-table-wrap {
+  overflow: auto;
+  border-radius: 14px;
+  border: 1px solid var(--border-color);
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Table admin moderne */
+.admin-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  table-layout: auto;
+  font-size: 0.95rem;
+  background: #fff;
+}
+
+/* Entête de la table */
+.admin-table thead th {
+  position: static;
+  background: #f7f9ff;
+  color: #0b1b3a;
+  border: 1px solid var(--border-color);
+  padding: 10px 12px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+/* Lignes du corps de table */
+.admin-table tbody tr {
+  background: #fff;
+  box-shadow: 0 12px 26px -18px rgba(24, 39, 75, 0.35);
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+/* Effet hover sur ligne */
+.admin-table tbody tr:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 38px -22px rgba(24, 39, 75, 0.45);
+  background: #fbfcff;
+}
+
+/* Cellules du corps */
+.admin-table tbody td {
+  border: none;
+  padding: 12px 14px;
+  word-break: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Arrondi début de ligne */
+.admin-table tbody td:first-child {
+  border-top-left-radius: 14px;
+  border-bottom-left-radius: 14px;
+}
+
+/* Arrondi fin de ligne */
+.admin-table tbody td:last-child {
+  border-top-right-radius: 14px;
+  border-bottom-right-radius: 14px;
+}
+
+/* Alignement dernière colonne */
+.admin-table th:last-child,
+.admin-table td:last-child {
+  text-align: center;
+}
+
+/* Alignement troisième depuis la fin */
+.admin-table th:nth-last-child(3),
+.admin-table td:nth-last-child(3) {
+  text-align: center;
+}
+
+/* Centrage de la 4e colonne (id admin) */
+#admin-table th:nth-child(4),
+#admin-table td:nth-child(4) {
+  text-align: center;
+}
+
+/* Rangée d’actions dans la table */
+.admin-actions {
+  display: flex;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+/* Petit bouton icône dans la table */
+.admin-iconbtn {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  text-decoration: none;
+  box-shadow: 0 10px 22px -18px rgba(24, 39, 75, 0.35);
+}
+
+/* Survol du bouton icône */
+.admin-iconbtn:hover {
+  transform: translateY(-1px);
+  color: var(--primary-hover);
+}
+
+/* Survol dangereux (supprimer) */
+.admin-iconbtn.admin-danger:hover {
+  color: #b91c1c;
+}
+
+/* Pastille générique */
+.badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Pastille succès */
+.badge-success {
+  background: rgba(16, 185, 129, 0.12);
+  color: #0f7a56;
+}
+
+/* Pastille danger */
+.badge-danger {
+  background: rgba(239, 68, 68, 0.12);
+  color: #931f1f;
+}
+
+/* Pastille avertissement */
+.badge-warn {
+  background: rgba(245, 158, 11, 0.12);
+  color: #804b05;
+}
+
+/* Texte multi-lignes tronqué */
+.admin-ellipsis {
+  max-width: 360px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Tailles de police adaptatives */
+.admin-table,
+.admin-table th,
+.admin-table td {
+  font-size: clamp(12px, 1.05vw, 16px);
+}
+
+/* Police entête adaptative */
+.admin-table thead th {
+  font-size: clamp(11px, 0.95vw, 15px);
+}
+
+/* Police cellule adaptative */
+.admin-table tbody td {
+  font-size: clamp(12px, 1.1vw, 16px);
+}
+
+/* Padding des cellules */
+.admin-table th,
+.admin-table td {
+  padding: 0.6em 0.8em;
+}
+
+/* Table scrollable en mobile */
+@media (max-width: 768px) {
+  .admin-table-wrap {
+    overflow-x: auto !important;
+  }
+  .admin-table {
+    font-size: 0.92rem;
+  }
+  .admin-table thead th,
+  .admin-table tbody td {
+    padding: 10px 12px;
+  }
+}
+
+/* Grille admin avec sidebar */
+.admin-shell-fixed {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  margin-top: 12px;
+}
+
+/* Colonne gauche colorée */
+.admin-sidebar {
+  background: linear-gradient(
+    180deg,
+    var(--primary-color),
+    var(--primary-hover)
+  );
+  border-radius: 20px;
+  color: #fff;
+  padding: 18px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 18px 40px -22px rgba(24, 39, 75, 0.55);
+  height: 100%;
+}
+
+/* Bloc logo de la sidebar */
+.admin-sidebrand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+}
+
+/* Icône du logo sidebar */
+.admin-sideicon {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--primary-hover);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+/* Texte du logo sidebar */
+.admin-sidetext {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+/* Liste des liens sidebar */
+.admin-sidenav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+/* Lien de la sidebar */
+.admin-sidelink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #e8eaff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  transition: transform 0.15s, background 0.15s, box-shadow 0.15s;
+}
+
+/* Survol lien sidebar */
+.admin-sidelink:hover {
+  transform: translateY(-1px);
+  background: #fff;
+  color: var(--primary-hover);
+  box-shadow: 0 18px 32px -20px rgba(0, 0, 0, 0.35);
+}
+
+/* Zone logout en bas */
+.admin-sidelogout {
+  margin-top: auto;
+}
+
+/* Bouton déconnexion */
+.admin-logoutbtn {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  text-decoration: none;
+}
+
+/* Survol bouton déconnexion */
+.admin-logoutbtn:hover {
+  background: #fff;
+  color: var(--primary-hover);
+}
+
+/* Contenu principal admin */
+.admin-main {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: 0 18px 40px -25px rgba(24, 39, 75, 0.35);
+  min-width: 0;
+}
+
+/* Barre haute admin */
+.admin-topbar {
+  margin-bottom: 8px;
+}
+
+/* Titre principal admin */
+.admin-title {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+/* Sous-titre admin */
+.admin-subtitle {
+  margin: 2px 0 0;
+  color: var(--muted);
+}
+
+/* Grille des petits KPI */
+.admin-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin: 10px 0 2px;
+}
+
+/* Carte d’un KPI */
+.admin-kpi-card {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 12px 28px -20px rgba(24, 39, 75, 0.28);
+}
+
+/* Effet hover léger KPI */
+.admin-kpi-card:hover {
+  transform: translateY(-1px);
+}
+
+/* Icône du KPI */
+.admin-kpi-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #fff, #eef1ff);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: var(--primary-hover);
+}
+
+/* Libellé du KPI */
+.admin-kpi-label {
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* Valeur du KPI */
+.admin-kpi-value {
+  font-size: 1.4rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* Variante KPI accent */
+.admin-kpi-accent .admin-kpi-icon {
+  color: #0b3a6b;
+}
+
+/* Variante KPI warn */
+.admin-kpi-warn .admin-kpi-icon {
+  color: #b45309;
+}
+
+/* Grille des cartes admin */
+.admin-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 14px;
+  margin-top: 12px;
+}
+
+/* Colonne de cartes */
+.admin-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Carte générique admin */
+.admin-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 12px 12px 10px;
+  box-shadow: 0 18px 36px -26px rgba(24, 39, 75, 0.35);
+}
+
+/* En-tête de carte admin */
+.admin-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* Titre de carte admin */
+.admin-card-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Pied de carte admin */
+.admin-card-foot {
+  margin-top: 8px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Texte grisé utilitaire */
+.admin-muted {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* Bouton action admin */
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 12px;
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-hover)
+  );
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  border: 1px solid rgba(24, 39, 75, 0.06);
+  box-shadow: 0 12px 28px -18px rgba(24, 39, 75, 0.45);
+  margin-bottom: 0.5rem;
+}
+
+/* Survol bouton admin */
+.admin-btn:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+/* Bouton admin secondaire */
+.admin-btn-secondary {
+  background: #0b3a6b;
+}
+
+/* Admin en une colonne selon écran */
+@media (max-width: 1024px) {
+  .admin-shell-fixed {
+    grid-template-columns: 1fr;
+  }
+  .admin-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* KPI sur 3 colonnes */
+@media (max-width: 1200px) {
+  .admin-kpi-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* KPI sur 2 colonnes */
+@media (max-width: 960px) {
+  .admin-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* KPI en 1 colonne */
+@media (max-width: 560px) {
+  .admin-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+  .admin-ellipsis {
+    max-width: 180px;
+  }
+}
+
+/* Ligne de pagination */
+.pagination {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Bouton de page */
+.pagination .page-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  color: var(--text-color);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+  transition: background-color 0.15s, border-color 0.15s;
+  text-decoration: none;
+}
+
+/* Survol bouton de page */
+.pagination .page-btn:hover {
+  background: #f4f7fc;
+  border-color: #dfe6f3;
+}
+
+/* Bouton de page actif */
+.pagination .page-btn.is-current {
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  color: #fff;
+  border-color: transparent;
+  box-shadow: var(--shadow);
+}
+
+/* Liens de bord (début/fin) */
+.pagination .edge {
+  font-weight: 600;
+  color: var(--primary-hover);
+  text-decoration: none;
+}
+
+/* Survol des liens de bord */
+.pagination .edge:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+/* Force une grille responsive pour les donuts */
+.content
+  .container
+  .content-main
+  div[style*="grid-template-columns:repeat(3"][style*="gap:14px"] {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 14px !important;
+}
+
+/* Donuts sur 2 colonnes */
+@media (max-width: 1200px) {
+  .content
+    .container
+    .content-main
+    div[style*="grid-template-columns:repeat(3"][style*="gap:14px"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* Donuts en 1 colonne */
+@media (max-width: 768px) {
+  .content
+    .container
+    .content-main
+    div[style*="grid-template-columns:repeat(3"][style*="gap:14px"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Empêche les enfants de déborder */
+.content
+  .container
+  .content-main
+  div[style*="grid-template-columns:repeat(3"][style*="gap:14px"]
+  > * {
+  min-width: 0;
+}
+
+/* Ajustements mobiles globaux */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .nav-menu {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+  .auth-card {
+    padding: 2rem;
+  }
+  .steps {
+    grid-template-columns: 1fr;
+  }
+  .error-actions {
+    flex-direction: column;
+  }
+}
+
+/* Logo compact et nav alignée */
+.header .nav-brand img,
+.nav-brand img,
+.brand .brand-mark {
+  max-height: 28px !important;
+  height: 28px !important;
+  width: auto !important;
+  object-fit: contain !important;
+  display: block;
+}
+
+/* Alignement des éléments dans la nav */
+.navbar {
+  align-items: center !important;
+  gap: 1rem;
+}
+
+/* Évite les débordements dans la nav */
+.navbar > * {
+  min-width: 0;
+}
+
+/* Menu aligné et à l’aise */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+/* Liens jamais soulignés */
+.nav-menu a,
+.btn,
+.button,
+.admin-btn,
+.center-btn a {
+  text-decoration: none !important;
+}
+
+/* Groupe de boutons centrés */
+.center-btn {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+}
+
+/* Boutons en lien restent blancs */
+a.button,
+a.button:visited {
+  color: #fff !important;
+}
+
+/* Table sans espacements entre lignes */
+.admin-table {
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  table-layout: auto !important;
+  width: max-content !important;
+  min-width: 100% !important;
+}
+
+/* Conteneur table: scroll horizontal actif */
+.admin-table-wrap {
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Cellules non coupées en retour à la ligne */
+.admin-table th,
+.admin-table td {
+  white-space: nowrap !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Retire l’ombre entre les lignes */
+.admin-table tbody tr {
+  box-shadow: none !important;
+  background: #fff;
+}
+
+/* Entête collée en haut de la table */
+.admin-table thead th {
+  position: sticky;
+  top: 0;
+  background: #f8fafc !important;
+  color: #0b1b3a !important;
+}
+
+/* Pastille “ok” douce */
+.badge--ok {
+  background: #e9fbf3 !important;
+  border-color: #b6efda !important;
+  color: #075e36 !important;
+}
+
+/* Pastille “retard” rouge clair */
+.badge--late {
+  background: #fff1f2 !important;
+  border-color: #fecaca !important;
+  color: #991b1b !important;
+}
+
+/* Pastille “en cours” bleue claire */
+.badge--progress {
+  background: #e9f2ff !important;
+  border-color: #c9defe !important;
+  color: #0b3a6b !important;
+}
+
+/* Style de la barre de défilement X */
+.admin-table-wrap::-webkit-scrollbar {
+  height: 10px;
+}
+
+/* Poignée de la scrollbar X */
+.admin-table-wrap::-webkit-scrollbar-thumb {
+  background: #cfd6f7;
+  border-radius: 8px;
+}
+
+/* Rail de la scrollbar X */
+.admin-table-wrap::-webkit-scrollbar-track {
+  background: #eef2ff;
+}
+
+/* Scrollbar fine (Firefox) */
+.admin-table-wrap {
+  scrollbar-color: #cfd6f7 #eef2ff;
+  scrollbar-width: thin;
+}
+
+/* Landing: éviter chevauchements en mobile */
+@media (max-width: 992px) {
+  .landing-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .landing-left {
+    position: relative;
+    z-index: 1;
+  }
+  .landing-right {
+    position: relative;
+    z-index: 0;
+    min-height: 360px;
+    margin-top: 12px;
+  }
+  .desk {
+    left: 6% !important;
+    right: 28% !important;
+  }
+  .open-book {
+    left: 14% !important;
+    width: 210px !important;
+  }
+  .phone {
+    right: 4% !important;
+    width: 160px !important;
+    height: 285px !important;
+    bottom: 14px !important;
+  }
+}
+
+/* Formulaire d’ajout média bien rangé */
+.media-add-form .form-row {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: flex-end !important;
+  gap: 12px !important;
+}
+
+/* Groupes minimums du formulaire */
+.media-add-form .form-group {
+  min-width: 140px;
+}
+
+/* Champs d’upload et saisie lisibles */
+.media-add-form input[type="file"],
+.media-add-form input[type="text"],
+.media-add-form input[type="number"],
+.media-add-form select,
+.media-add-form textarea {
+  background: #fbfcff !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 12px !important;
+  padding: 0.5rem 0.75rem !important;
+}
+
+/* Bloc filtre clair et arrondi */
+.media-filter {
+  background: #fff !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 16px !important;
+  padding: 12px 14px !important;
+}
+
+/* Table plus large que le cadre (répété) */
+.admin-table {
+  width: max-content !important;
+  min-width: 100% !important;
+}
+
+/* Survol des liens du menu (rappel) */
+.nav-menu a:hover {
+  color: var(--primary-color);
+}
+
+/* Filtre médias en carte soignée */
+.media-filter {
+  background: #fff !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 22px !important;
+  box-shadow: 0 20px 40px -22px rgba(24, 39, 75, 0.15) !important;
+  padding: 16px 18px !important;
+}
+
+/* Grille des champs du filtre */
+.media-filter .form-row {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(220px, 1fr)) !important;
+  gap: 16px 20px !important;
+  align-items: end !important;
+}
+
+/* Filtre sur 3 colonnes */
+@media (max-width: 1200px) {
+  .media-filter .form-row {
+    grid-template-columns: repeat(3, minmax(200px, 1fr)) !important;
+  }
+}
+
+/* Filtre sur 2 colonnes */
+@media (max-width: 900px) {
+  .media-filter .form-row {
+    grid-template-columns: repeat(2, minmax(200px, 1fr)) !important;
+  }
+}
+
+/* Filtre en 1 colonne */
+@media (max-width: 560px) {
+  .media-filter .form-row {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Groupes du filtre en colonne */
+.media-filter .form-group {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+}
+
+/* Labels du filtre adoucis */
+.media-filter label {
+  color: #6b7280 !important;
+  font-weight: 600 !important;
+}
+
+/* Champs du filtre arrondis */
+.media-filter input[type="text"],
+.media-filter input[type="number"],
+.media-filter select {
+  background: #f4f8ff !important;
+  border: 1px solid #e6edff !important;
+  height: 44px !important;
+  line-height: 44px !important;
+  border-radius: 9999px !important;
+  padding: 0 16px !important;
+  color: var(--text) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+  outline: none !important;
+}
+
+/* Placeholder plus doux */
+.media-filter input::placeholder {
+  color: #9fb0c9 !important;
+}
+
+/* Focus des champs du filtre */
+.media-filter input:focus,
+.media-filter select:focus {
+  border-color: rgba(108, 99, 255, 0.55) !important;
+  box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.12) !important;
+}
+
+/* Champs min et max plus étroits */
+.media-filter input[placeholder^="min"],
+.media-filter input[placeholder^="max"] {
+  width: 120px !important;
+  text-align: center;
+}
+
+/* Interrupteur “disponibles” */
+.media-filter #available {
+  appearance: none !important;
+  width: 54px !important;
+  height: 30px !important;
+  background: #eef2ff !important;
+  border: 1px solid #dee7ff !important;
+  border-radius: 9999px !important;
+  position: relative !important;
+  cursor: pointer !important;
+  transition: background 0.2s, border-color 0.2s !important;
+  margin-top: 6px !important;
+}
+
+/* Bulle de l’interrupteur */
+.media-filter #available::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(24, 39, 75, 0.18);
+  transition: transform 0.2s ease;
+}
+
+/* Interrupteur activé */
+.media-filter #available:checked {
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-hover)
+  ) !important;
+  border-color: transparent !important;
+}
+
+/* Bulle à droite quand activé */
+.media-filter #available:checked::after {
+  transform: translateX(24px);
+}
+
+/* Bouton “Filtrer” (violet) */
+.media-filter .btn-primary,
+.media-filter button[type="submit"],
+.media-filter .button#purple,
+.media-filter .button#red {
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-hover)
+  ) !important;
+  color: #fff !important;
+  border: 0 !important;
+  border-radius: 9999px !important;
+  height: 40px !important;
+  padding: 0 18px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 12px 30px rgba(109, 99, 255, 0.25) !important;
+  transition: filter 0.15s, transform 0.15s !important;
+}
+
+/* Survol bouton “Filtrer” */
+.media-filter .btn-primary:hover,
+.media-filter button[type="submit"]:hover,
+.media-filter .button#purple:hover,
+.media-filter .button#red:hover {
+  filter: brightness(1.05) !important;
+  transform: translateY(-1px);
+}
+
+/* Bouton “Réinitialiser” (blanc) */
+.media-filter .btn-secondary,
+.media-filter .button:not(#red):not(#purple) {
+  background: #fff !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 9999px !important;
+  height: 40px !important;
+  padding: 0 16px !important;
+  font-weight: 700 !important;
+}
+
+/* Ligne du logo dans la nav */
+a.nav-brand,
+.nav-brand {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.55rem !important;
+  flex-direction: row !important;
+  white-space: nowrap !important;
+}
+
+/* Dimensions du logo image/svg */
+.nav-brand img,
+.nav-brand svg,
+.brand-mark {
+  height: 28px !important;
+  width: auto !important;
+  display: block !important;
+}
+
+/* Lien du logo cliquable aligné */
+.nav-brand a {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.55rem !important;
+}
+
+/* Empêche le retour à la ligne dans la nav */
+.navbar {
+  flex-wrap: nowrap !important;
+}
+
+/* Le menu prend la place qu’il faut */
+.nav-menu {
+  min-width: 0 !important;
+}
+
+/* Colonnage ne déborde pas */
+.admin-grid,
+.admin-col,
+.admin-main {
+  min-width: 0 !important;
+}
+
+/* Cartes admin tiennent dans le cadre */
+.admin-card {
+  max-width: 100% !important;
+  width: 100% !important;
+  overflow: visible !important;
+}
+
+/* Conteneurs table autorisent le scroll X */
+.admin-table-wrap,
+.admin-table-wrap--x,
+.admin-table-wrap *[class*="admin-table-wrap"] {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 14px;
+}
+
+/* Table large = scroll X visible */
+.admin-table {
+  width: max-content !important;
+  min-width: 100% !important;
+  table-layout: auto !important;
+}
+
+/* Cellules tronquées proprement */
+.admin-table th,
+.admin-table td {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Colonne “infos” autorisée à revenir à la ligne */
+#admin-table-medias th:nth-child(5),
+#admin-table-medias td:nth-child(5) {
+  white-space: normal !important;
+  max-width: 520px !important;
+}
+
+/* Pas de scroll horizontal sur toute la page */
+html,
+body {
+  overflow-x: hidden !important;
+}
+
+/* Padding plus compact sur mobile pour tables */
+@media (max-width: 768px) {
+  .admin-table th,
+  .admin-table td {
+    padding: 0.6rem 0.75rem !important;
+  }
+  .admin-card,
+  .admin-table-wrap {
+    width: 100% !important;
+  }
+}
+
+/* Scrollbar X visible et fine (bis) */
+.admin-table-wrap::-webkit-scrollbar {
+  height: 10px;
+}
+.admin-table-wrap::-webkit-scrollbar-thumb {
+  background: #cfd6f7;
+  border-radius: 8px;
+}
+.admin-table-wrap::-webkit-scrollbar-track {
+  background: #eef2ff;
+}
+.admin-table-wrap {
+  scrollbar-color: #cfd6f7 #eef2ff;
+  scrollbar-width: thin;
+}
+
+/* Ancienne classe utilitaire pour forcer scroll X */
+div.scrollable-x {
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Masque les blocs non choisis dans le formulaire média */
+.media-add-form .type-block {
+  display: none;
+  border: none;
+}
+
+/* Affiche le bloc livre si choisi */
+.media-add-form[data-show="livre"] #fs-livre {
+  display: block;
+  border: none;
+}
+
+/* Affiche le bloc film si choisi */
+.media-add-form[data-show="film"] #fs-film {
+  display: block;
+  border: none;
+}
+
+/* Affiche le bloc jeu si choisi */
+.media-add-form[data-show="jeu"] #fs-jeu {
+  display: block;
+  border: none;
+}
+
+/* Défilement doux sur la page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Petit bouton “retour en haut” */
+.back-to-top {
+  display: inline-block;
+  padding: 8px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 9999px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #0b1b3a;
+  background: #ffffff;
+  transition: background 0.15s ease, transform 0.15s ease,
+    border-color 0.15s ease;
+}
+
+/* Survol du bouton “retour en haut” */
+.back-to-top:hover,
+.back-to-top:focus-visible {
+  background: #f5f7fb;
+  border-color: #d1d5db;
+  transform: translateY(-1px);
+  outline: none;
+}
+
+/* Petite hauteur pour l’icône plus */
+.plus {
+  height: 10px;
+}

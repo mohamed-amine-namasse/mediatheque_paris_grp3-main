@@ -1,0 +1,62 @@
+# Configuration locale
+config/database_local.php
+config/config_local.php
+database.php
+# Logs
+*.log
+logs/
+error.log
+access.log
+
+# Base de données
+*.sql.backup
+*.db
+*.sqlite
+
+# Cache et sessions
+cache/
+tmp/
+temp/
+sessions/
+
+# Fichiers uploadés
+uploads/
+public/uploads/
+
+# Dépendances
+vendor/
+node_modules/
+composer.lock
+package-lock.json
+
+# Environnement de développement
+.env
+.env.local
+.env.development
+.env.production
+
+# Éditeurs et IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Fichiers de sauvegarde
+*.bak
+*.backup
+*.orig
+
+# Fichiers temporaires
+*.tmp
+.htaccess.bak
+
+# Tests
+tests/coverage/
+phpunit.xml.bak
+
+# Minified files
+*.min.css
+*.min.js 
