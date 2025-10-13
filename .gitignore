@@ -1,7 +1,7 @@
 # Configuration locale
 config/database_local.php
 config/config_local.php
-database.php
+config/database.php
 # Logs
 *.log
 logs/
