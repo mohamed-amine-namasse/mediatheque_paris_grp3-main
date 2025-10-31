@@ -94,8 +94,8 @@ body {
 }
 
 /* Couleur au survol du menu */
-.nav-menu a:hover {
-  color: var(--primary-color);
+.nav-menu li a:hover {
+  color: var(--white);
 }
 
 /* Groupe de petits liens type pastilles */
@@ -707,7 +707,6 @@ body {
   border-radius: 0.75rem;
   box-shadow: var(--shadow);
   border: 1px solid var(--border-color);
-
 }
 
 /* Colonne de droite */
